@@ -1,0 +1,35 @@
+{{#> layout }}
+    <div class="row">
+        <div class="col-md-8">
+            <form method="POST">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Список рубрик</div>
+
+                    <ul class="list-group" id="rubrics">
+                        {{#rubrics}}
+                            <li class="list-group-item">
+                                <input type="hidden" name="rubricId" value="{{_id}}" />
+                                <input type="text" name="title" value="{{{title}}}" class="form-control" required />
+                            </li>
+                        {{/rubrics}}
+                    </ul>
+
+                    <div class="panel-footer">
+                        <input type="submit" class="btn btn-primary" value="Сохранить" />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <div class="alert alert-info">
+                Редактируйте порядок рубрик, перетаскивая их мышью
+            </div>
+        </div>
+    </div>
+
+    <script src="/public/js/Sortable.min.js"></script>
+    <script>
+        var el = document.getElementById('rubrics');
+        var sortable = Sortable.create(el);
+    </script>
+{{/layout}}

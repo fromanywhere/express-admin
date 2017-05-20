@@ -1,0 +1,110 @@
+{{#> layout }}
+    <div class="row">
+        <div class="col-md-8">
+
+            <form method="POST" class="form-horizontal" enctype='multipart/form-data'>
+                <input type="hidden" name="newsId" value="{{_id}}" />
+                <input type="hidden" name="date" value="{{saveDate}}" />
+
+
+                <div class="form-group">
+                    <label for="title" class="col-sm-2 control-label">Заголовок</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="title" name="title" value="{{{title}}}" required placeholder="Заголовок">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="rubric" class="col-sm-2 control-label">Рубрика</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="rubric" id="rubric">
+                            {{#rubricsList}}
+                                <option value="{{_id}}" {{#if selected}}selected="selected"{{/if}}>{{{title}}}</option>
+                            {{/rubricsList}}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="text" class="col-sm-2 control-label">Текст</label>
+                    <div class="col-sm-10">
+                        <textarea name="text" id="text" class="form-control" rows="10"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="file" class="col-sm-2 control-label">Изображение</label>
+
+                    <div class="col-sm-5">
+                        <input type="hidden" name="filename" value="{{image}}" class="js-remove-field" />
+                        <input type="file" name="file" id="file" class="form-control js-add-image js-remove-field" />
+                    </div>
+
+                    <div class="col-sm-5 js-hide {{#unless image}}hidden{{/unless}}">
+                        <button type="button" class="btn btn-default btn-block js-remove-image">Удалить изображение</button>
+                        {{#if image}}
+                            <div class="btn-block">
+                                <a data-fancybox="gallery" href="{{image}}">
+                                    <img src="{{image}}" class="img-thumbnail" />
+                                </a>
+                            </div>
+                        {{/if}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Опубликовано</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">
+                            {{dateFormatted}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-primary" name="action" value="edit">Сохранить</button>
+                        <button type="submit" class="btn btn-danger" name="action" value="remove">Удалить</button>
+                    </div>
+                </div>
+
+
+            </form>
+
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
+
+    {{#if image}}
+        <link href="/public/css/jquery.fancybox.min.css" rel="stylesheet" />
+        <script src="/public/js/jquery-3.2.1.min.js"></script>
+        <script src="/public/js/jquery.fancybox.min.js"></script>
+    {{/if}}
+
+    <script>
+        var text = "{{{textFormatted}}}";
+        var textarea = document.getElementById('text');
+        var removeButton = document.querySelector('.js-remove-image');
+        var addButton = document.querySelector('.js-add-image');
+        var area = document.querySelector('.js-hide');
+        var field = document.querySelectorAll('.js-remove-field');
+        var delimiter = new RegExp('<!--&-->', 'ig');
+
+        textarea.value = text.replace(delimiter, '\r\n');
+
+        removeButton.addEventListener('click', function () {
+            area.classList.add('hidden');
+            Array.from(field).forEach(function (input) {
+                input.value = '';
+            })
+        });
+
+        addButton.addEventListener('change', function () {
+            area.classList.remove('hidden');
+            removeButton.classList.remove('hidden');
+        })
+    </script>
+
+{{/layout}}

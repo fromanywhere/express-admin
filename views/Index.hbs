@@ -1,0 +1,55 @@
+{{#> layout }}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a href="{{editNewsLink}}" class="btn btn-default btn-xs pull-right">Создать</a>
+                    Последние новости
+                </div>
+
+                <ul class="list-group">
+                    {{#news}}
+                        <a href="{{link}}" class="list-group-item">
+                            <span class="badge">{{renderDate}}</span>
+                            {{{title}}}
+                        </a>
+                    {{/news}}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Поиск</div>
+                <div class="panel-body">
+
+                    <form action="{{searchLink}}">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Введите слово..." name="query">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit">Найти</button>
+                            </span>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a href="{{editRubricsLink}}" class="btn btn-default btn-xs pull-right">Редактировать</a>
+                    Список рубрик
+                </div>
+
+                <ul class="list-group">
+                    {{#rubrics}}
+                        <li class="list-group-item">
+                            <span class="badge">{{count}}</span>
+                            {{{title}}}
+                        </li>
+                    {{/rubrics}}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+{{/layout}}
